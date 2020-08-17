@@ -15,13 +15,10 @@
     <button v-on:click="remove" >  remove  </button>
     </div>
 
-
 </template>
 
 <script>
 export default {
-
-
 
     props:["all"],
     data(){
