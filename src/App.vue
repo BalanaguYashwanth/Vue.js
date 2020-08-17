@@ -23,7 +23,10 @@
      
   </mpage>lot ="title"
   <appfooter v-bind:title="title" /> -->
+<<<<<<< HEAD
   
+=======
+>>>>>>> Kickbag
  </div> 
 </template>
 <script>
