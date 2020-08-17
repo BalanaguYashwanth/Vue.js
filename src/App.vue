@@ -6,11 +6,9 @@
   <!-- <practice1 /> -->
   <!-- <dynamiccss /> -->
   <!-- <reference /> -->
-  <kickbag />
-  <!-- <appheader  v-bind:title="title"  v-on:change="updatechange($event)" />
-  <mpage v-bind:all="all"> -->
-  
-<!-- 
+  <appheader  v-bind:title="title"  v-on:change="updatechange($event)" />
+  <mpage v-bind:all="all">
+
   <div slot="form">  
   User:<input type="text" >
   <br>
@@ -22,23 +20,19 @@
  </div>
      
   </mpage>lot ="title"
-  <appfooter v-bind:title="title" /> -->
-<<<<<<< HEAD
-  
-=======
->>>>>>> Kickbag
- </div> 
+  <appfooter v-bind:title="title" />
+</div>
 </template>
 <script>
 //import todo from './components/Basics';
 //import Mousemove from './components/Mousemove';
 //import inputinterrupt from './components/Input-Interept';
 //import practice from './components/practice';
-import kickbag from './components/kickbag';
+//import kickbag from './components/kickbag';
 //import reference from './components/reference';
-// import appheader from './components/header';
-// import appfooter from './components/footer'
-// import mpage from './components/mpage'
+import appheader from './components/header';
+import appfooter from './components/footer'
+import mpage from './components/mpage'
 export default{
     name:"App",
     data(){
@@ -70,11 +64,11 @@ export default{
       //practice,
       //practice1,
       //dynamiccss,
-      kickbag,
+      //kickbag,
       //reference,
-      // appheader,
-      // appfooter,
-      // mpage,
+      appheader,
+      appfooter,
+      mpage,
     },
 };
 </script>
