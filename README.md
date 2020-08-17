@@ -1,4 +1,4 @@
-# vue_todolist
+# Vue_BlogsWebpage
 
 ## Project setup
 ```
