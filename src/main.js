@@ -11,7 +11,6 @@ Vue.config.productionTip = false
 export const bus = new Vue()
 
 
-
 Vue.directive('size', {
   bind(el, binding){
       if (binding.value == 'wide'){

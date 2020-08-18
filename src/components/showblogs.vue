@@ -2,8 +2,8 @@
   <div>
     <input type="text" v-model="search" placeholder="search item" />
     <div v-size="'wide'" v-for="(datas,index) in filterdata" v-bind:key="index">
-      <h3 v-rainbow>{{datas.title | maintitle}}</h3>
-      <p>{{datas.body | short }}</p>
+    <router-link v-bind:to="'/'+datas.id" > <h3 v-rainbow>{{datas.title | maintitle}}</h3> </router-link>
+    <p>{{datas.body | short }}</p>
     </div>
   </div>
 </template>
@@ -33,16 +33,12 @@ export default {
     },
     
   },
-
-
   filters:{
     'maintitle':function(value){
       return value.toUpperCase()
     }
   },
   mixins:[searchmixins]
-
-
 
 };
 </script>

@@ -1,11 +1,8 @@
 <template>
     <div>
     <h1> This is mainpage </h1>
-
     <slot name="form">
     </slot>
-
-
     <ul> 
         <li v-for="(datas,index) in all" v-bind:key="index" v-on:click="datas.show=!datas.show" > 
            {{datas.name}}  
@@ -14,7 +11,6 @@
     </ul> 
     <button v-on:click="remove" >  remove  </button>
     </div>
-
 </template>
 
 <script>
@@ -26,14 +22,12 @@ export default {
  
         }
     },
-
     methods:{
         remove:function(){
             
             this.all.pop();
 
         }
-
     }
 }
 </script>
