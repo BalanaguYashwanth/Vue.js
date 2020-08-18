@@ -3,7 +3,9 @@
     <input type="text" v-model="search" placeholder="search item" />
     <div v-size="'wide'" v-for="(datas,index) in filterdata" v-bind:key="index">
     <router-link v-bind:to="'/'+datas.id" > <h3 v-rainbow>{{datas.title | maintitle}}</h3> </router-link>
-    <p>{{datas.body | short }}</p>
+    <p>{{datas.content  }}</p>
+    <p> {{datas.selectdata}} </p>
+    <p v-for="(mdatas,index) in datas.checkcontent" v-bind:key="index" > {{mdatas}} </p>
     </div>
   </div>
 </template>
@@ -18,11 +20,20 @@ export default {
   },
   created() {
     this.$http
-      .get("http://jsonplaceholder.typicode.com/posts", {})
+      .get("https://test-36fdb.firebaseio.com/posts.json", {})
       .then(function (data) {
-        this.data = data.body.slice(0, 10);
-        console.log(this.search);
-      });
+        return data.json()
+      }).then(function(data){
+           var blogarray=[];
+        for(var key in data)
+        {
+          data[key].id=key;
+          blogarray.push(data[key]);
+        }
+        console.log(blogarray);
+        this.data=blogarray;
+
+      })
   },
   
   directives: {

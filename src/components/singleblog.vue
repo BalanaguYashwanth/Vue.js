@@ -2,7 +2,10 @@
 <div>
 <label v-for="(datas,index) in alldata" v-bind:key="index">
     <h2>{{datas.title}}</h2> 
-    <p> {{datas.body}} </p>      
+    <p> {{datas.content}} </p>
+    <p> {{datas.selectdata}} </p>
+    <p> {{datas.content}} </p>  
+     <p> {{datas.checkcontent}} </p>      
 </label>
 
 </div>
@@ -23,10 +26,13 @@ export default{
     },
 
     created(){
-        this.$http.get('http://jsonplaceholder.typicode.com/posts/'+this.id,{
+        this.$http.get('https://test-36fdb.firebaseio.com/posts/'+this.id+'.json/',{
         }).then(function(data){
-            this.alldata=data;
+            return data.json()
+        }).then(function (data) {
             console.log(data);
+            this.alldata.push(data);
+            
         })
     }
 
