@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import searchmixins from '../mixins/seachmixins' 
+import searchmixins from '../mixins/seachmixins'
 export default {
   data() {
     return {
@@ -24,7 +24,7 @@ export default {
         console.log(this.search);
       });
   },
-  
+
   directives: {
     rainbow: {
       bind(el) {
@@ -40,9 +40,8 @@ export default {
       return value.toUpperCase()
     }
   },
+
   mixins:[searchmixins]
-
-
 
 };
 </script>
