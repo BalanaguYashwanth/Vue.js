@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueResource from 'vue-resource'
+import Vuerouters from 'vue-router'
+import Routers from './routers'
+
 Vue.use(VueResource)
+Vue.use(Vuerouters)
+
 Vue.config.productionTip = false
-
-
 export const bus = new Vue()
 
 
@@ -21,7 +24,10 @@ Vue.directive('size', {
   }
 });
 
-
+const router = new Vuerouters({
+  routes:Routers,
+  mode:'history',
+})
 
 
 Vue.filter('short',function(value){
@@ -31,4 +37,5 @@ Vue.filter('short',function(value){
 
 new Vue({
   render: h => h(App),
+  router:router
 }).$mount('#app')
