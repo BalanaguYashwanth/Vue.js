@@ -80,9 +80,11 @@ export default {
           }
         )
         .then((response) => (this.status = response));
-        swal.fire("Updated!", "Your name has been updated.", "success");
+        swal.fire("Updated!", "Your name has been updated.", "success").then(
+            response => location.reload(response) 
+        );
     
-      location.reload();
+      
     
    
     },
