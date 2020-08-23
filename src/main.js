@@ -3,7 +3,9 @@ import App from './App.vue'
 import VueResource from 'vue-resource'
 import Vuerouters from 'vue-router'
 import Routers from './routers'
+import VueSimpleAlert from "vue-simple-alert";
 
+Vue.use(VueSimpleAlert,{ reverseButtons: true });
 Vue.use(VueResource)
 Vue.use(Vuerouters)
 
