@@ -31,6 +31,8 @@ const router = new Vuerouters({
 })
 
 
+
+
 Vue.filter('short',function(value){
   return value.slice(0,100)+".."
 })

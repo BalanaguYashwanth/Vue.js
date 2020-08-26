@@ -9,16 +9,11 @@
 
 <p v-else-if ="success" > hi this is success </p>
 
-
-
-
 </div>
 </template>
 
 <script>
 export default {
-
-   el:"#ex",
 
     data(){
       return{

@@ -1,11 +1,10 @@
-import showblogs from './components/showblogs' 
-import addblog from './components/addblog.vue'
-import singleblog from './components/singleblog.vue'
+import login from './components/login.vue';
+import todo from './components/todo.vue';
+import register from './components/register.vue'
 
 export default[
-    {path:'/',component:showblogs},
-    {path:'/add',component:addblog},
-    {path:'/:id',component:singleblog},
-
+    {path:'/register',component:register},
+    {path:'/login',component:login},
+    {path:'/todo',component:todo},
 ]
 
