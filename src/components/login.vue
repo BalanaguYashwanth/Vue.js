@@ -13,6 +13,7 @@
 </template>
 <script>
 import axios from 'axios'
+import {bus} from '../main'
 export default {
     data(){
         return{
@@ -30,10 +31,10 @@ export default {
          }).then(response=>{
              if(response.status>='200' && response.status<'250')                                                                                                                                                                                                                                                                                                                                                                                                                     
              {
+                bus.$emit('username',this.username);
                 this.info="successfully logged in";
                 this.token=response.data.token;
                 localStorage.setItem('user-token',response.data.token);
-                
              }
             console.log(response.status);
             this.redirect();
@@ -41,7 +42,6 @@ export default {
             localStorage.removeItem('user-token');
           console.log(error.response.data);
           this.info=error.response.data;
-
         });
         },
         redirect(){
