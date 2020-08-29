@@ -1,7 +1,7 @@
 <template>
     <div>
         <label> Username
-        <input type="text" v-model="username" placeholder="enter the name"/>
+        <input type="text" v-model="username"  placeholder="enter the name"/>
          </label>
         <label> Passsword 
         <input type="password" v-model="password"  placeholder="enter the password"/>
@@ -21,6 +21,7 @@ export default {
             token:'',
             username:"",
             password:"",
+            dusername:[],
         }
     },  
     methods:{
@@ -31,7 +32,8 @@ export default {
          }).then(response=>{
              if(response.status>='200' && response.status<'250')                                                                                                                                                                                                                                                                                                                                                                                                                     
              {
-                bus.$emit('username',this.username);
+                this.dusername.push(this.username);
+                bus.$emit('username',this.dusername);
                 this.info="successfully logged in";
                 this.token=response.data.token;
                 localStorage.setItem('user-token',response.data.token);

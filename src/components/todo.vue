@@ -2,11 +2,8 @@
   <div>
     <button v-on:click="logout">logout</button>
     <button v-on:click="retriveToken">retriveToken</button>
-    <form v-if=all.verify>
-
-      <h4> {{logindetails}} </h4>         
-      <p>status: {{all.status.statusText}}</p>
-      enter the name :
+    <form v-if="all.verify">
+      <p>status: {{all.status.statusText}}</p>enter the name :
       <input
         v-model.lazy="all.mname"
         placeholder="enter the your name"
@@ -28,25 +25,20 @@
       </div>
     </form>
 
-    <form v-if=!all.verify>
-      <h1> Your requested has sent to admin wait for owner approval </h1>
+    <form v-if="!all.verify">
+      <h1>Your requested has sent to admin wait for owner approval</h1>
     </form>
-
-   
-
   </div>
 </template>
 <script>
 import axios from "axios";
 import swal from "sweetalert2";
-import {bus} from '../main';
 import { Tokenservice } from "../storage-token/token";
+import { bus } from "../main";
 window.swal = swal;
 export default {
-  props:{
-    logindetails:{
-     
-    }
+  props: {
+    logindetails: {},
   },
   data() {
     return {
@@ -57,31 +49,47 @@ export default {
         status: "",
         uinput: "",
         dummy: true,
-        verify:false,
+        verify: false,
       },
+      logindata: "",
     };
   },
   methods: {
+    
     retriveToken: function () {
-      axios({
-        method: "get",
-        url: "http://127.0.0.1:8000/todoauth/retriveToken",
-
-      }).then(response => console.log(response) )
+      let axiosconfig = {
+        headers: {
+          Authorization: "Token " + Tokenservice.getToken(),
+        },
+      };
+      axios.get("http://127.0.0.1:8000/todoauth/api_get",axiosconfig)
+        .then((response) => console.log(response))
+        .catch((error)=>console.log(error));
     },
 
     logout: function () {
-      axios.post("http://127.0.0.1:8000/todoauth/logout").then((response) => {
+          let axiosconfig = {
+        headers: {
+          Authorization: "Token " + Tokenservice.getToken(),
+        },
+      };
+      axios.get("http://127.0.0.1:8000/todoauth/logout",axiosconfig).then((response) => {
         localStorage.removeItem("user-token");
         this.redirect();
         console.log(response);
       });
     },
+    
     redirect() {
       this.$router.push({ path: "/login" });
     },
     posting: function () {
-      console.log("done");
+      bus.$on("username", (data) => {
+        this.logindata = data;
+        console.log(this.logindata);
+        console.log(data);
+      });
+
       let axiosconfig = {
         headers: {
           Authorization: "Token " + Tokenservice.getToken(),
@@ -153,11 +161,6 @@ export default {
     },
   },
   created() {
-      bus.$on('username',(data) => {
-          this.logindetails=data;
-         console.log(data);
-      });
-
     let axiosconfig = {
       headers: {
         Authorization: "Token " + Tokenservice.getToken(),
@@ -165,17 +168,15 @@ export default {
     };
     axios
       .get("http://127.0.0.1:8000/api/v3/todo_api/", axiosconfig)
-      .then((response) => 
-      {
+      .then((response) => {
         this.all.name = response.data;
-        this.all.verify=true;
-        })
-      .catch(error=>{
+        this.all.verify = true;
+      })
+      .catch((error) => {
         console.log(error.response.data);
         console.log("not verified");
       });
   },
-
 };
 </script>
 

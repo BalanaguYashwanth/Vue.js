@@ -12,7 +12,6 @@ Vue.use(Vuerouters)
 Vue.config.productionTip = false
 export const bus = new Vue()
 
-
 Vue.directive('size', {
   bind(el, binding){
       if (binding.value == 'wide'){
@@ -29,8 +28,6 @@ const router = new Vuerouters({
   routes:Routers,
   mode:'history',
 })
-
-
 
 
 Vue.filter('short',function(value){
