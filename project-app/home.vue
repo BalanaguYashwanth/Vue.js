@@ -6,12 +6,24 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label>Name</label>
-            <input type="text" v-model="name" placeholder="enter the name" class="form-control" required/>
+            <input
+              type="text"
+              v-model="name"
+              placeholder="enter the name"
+              class="form-control"
+              required
+            />
           </div>
 
           <div class="form-group col-md-6">
             <label>Email</label>
-            <input type="email" v-model="email" placeholder="enter the email" class="form-control" required/>
+            <input
+              type="email"
+              v-model="email"
+              placeholder="enter the email"
+              class="form-control"
+              required
+            />
           </div>
         </div>
 
@@ -66,7 +78,7 @@
 
         <div class="form-group">
           <label>Urgency</label>
-          <select placeholder="select the option" v-model="urgency" class="form-control" required >
+          <select placeholder="select the option" v-model="urgency" class="form-control" required>
             <option value="Fewhours">Few hours</option>
             <option value="Fewdays">Few days</option>
             <option value="Fewdays">Few weeks</option>
@@ -74,13 +86,11 @@
         </div>
 
         <button v-on:click.prevent="posting" type="submit" class="btn btn-secondary">Submit</button>
-       <br>
-       <h1> {{this.dummy}} </h1>  
-       <br>
-       <h1> {{this.mphonenumber}} </h1>
-         
+        <br />
+        <h1>{{this.dummy}}</h1>
+        <br />
+        <h1>{{this.mphonenumber}}</h1>
       </div>
-      
     </form>
   </div>
 </template>
@@ -98,34 +108,40 @@ export default {
       phonenumber: "",
       city: "",
       urgency: "",
-      dummy:"",
-      mphonenumber:"",
+      dummy: "",
+      mphonenumber: "",
     };
   },
   methods: {
+
     posting: function () {
-       
-      if(this.name!="" && this.email!=""&& this.address!=""&& this.landmark!=""&& this.phonenumber!==""&& this.city!=""&& this.urgency!="")
-      {
-      axios
-        .post("https://test-36fdb.firebaseio.com/posts.json", {
-          name: this.name,
-          email: this.email,
-          address: this.address,
-          landmark:this.landmark,
-          alternatephonenumber: this.alternatephonenumber,
-          phonenumber: this.phonenumber,
-          city: this.city,
-          urgency: this.urgency,
-        })
-        .then((Response) => {
-        console.log(Response);
-        this.$router.push('/message');
-        });
-       }
-       else{
-        this.dummy="Please enter valid details and please fillup all inputs";
-       }
+      if (
+        this.name != "" &&
+        this.email != "" &&
+        this.address != "" &&
+        this.landmark != "" &&
+        this.phonenumber !== "" &&
+        this.city != "" &&
+        this.urgency != ""
+      ) {
+        axios
+          .post("https://alarm-a709f.firebaseio.com/posts.json", {
+            name: this.name,
+            email: this.email,
+            address: this.address,
+            landmark: this.landmark,
+            alternatephonenumber: this.alternatephonenumber,
+            phonenumber: this.phonenumber,
+            city: this.city,
+            urgency: this.urgency,
+          })
+          .then((Response) => {
+            console.log(Response);
+            this.$router.push("/message");
+          });
+      } else {
+        this.dummy = "Please enter valid details and please fillup all inputs";
+      }
     },
   },
 };

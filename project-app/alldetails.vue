@@ -1,5 +1,8 @@
 <template>
+
   <div id="title"  class="table-responsive-sm">
+    <button v-on:click="signout" > logout </button>
+
     <h2 class="display-3">User Details</h2>
     <table class="table table-bordered" style="table-layout: auto width: 100%;  ">
       <thead>
@@ -26,13 +29,17 @@
         <td>{{details.alternatephonenumber}}</td>
         <td>{{details.city}}</td>
         <td>{{details.urgency}}</td>
-        <td> <button> delete </button> </td>
+        <td> <button v-on:click="deleting(details.id)" > delete </button> </td>
       </tbody>
     </table>
   </div>
 </template>
 <script>
 import axios from "axios";
+import firebase from 'firebase';
+import swal from "sweetalert2";
+window.swal = swal;
+
 export default {
   data() {
     return {
@@ -41,11 +48,30 @@ export default {
     };
   },
 
-  methods: {},
+  methods: {
+    signout: function () {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => this.$router.replace("/signin"));
+    },
+
+    deleting:function(parm){
+        axios.delete('https://alarm-a709f.firebaseio.com/posts/'+ parm+'.json')
+        .then(response=>{
+            console.log(response)
+            swal.fire(
+                "Deleted!",
+                "Successfully deleted",
+                "succcess",
+            ).then(response => location.reload(response))
+            })
+    }
+  },
 
   created() {
     axios
-      .get("https://test-36fdb.firebaseio.com/posts.json")
+      .get("https://alarm-a709f.firebaseio.com/posts.json")
       .then((Response) => {
         this.body = Response;
         var mdata = Response.data;
