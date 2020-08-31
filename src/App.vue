@@ -1,25 +1,26 @@
 <template>
-<div>
-<router-view> </router-view>
-</div>
+  <div id="app">
+   <router-view> </router-view>
+  </div>
 </template>
-<script>
-// import showblogs from './components/showblogs.vue';
-// import listblogs from './components/listblogs.vue'
-//import headers from './components/headers.vue';
-//import todo from './components/todo.vue';
-export default{
-    name:"App",
-    components:{
-      // showblogs,
-      // listblogs,
-     // headers,
-     //todo,
-    },
-};
 
+<script>
+//import HelloWorld from './components/HelloWorld.vue'
+
+export default {
+  name: 'App',
+  components: {
+    //HelloWorld
+  }
+}
 </script>
 
 <style>
-
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+  margin-top: 30px;
+}
 </style>
