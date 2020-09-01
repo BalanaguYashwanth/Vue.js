@@ -3,6 +3,8 @@ import App from './App.vue'
 import Vuerouters from 'vue-router'
 import Routers from './router'
 
+export const bus=new Vue();
+
 Vue.use(Vuerouters)
 Vue.config.productionTip = false
 

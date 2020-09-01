@@ -39,7 +39,7 @@
         <div class="form-row">
           <div class="form-group col-md-4">
             <label>Present License number</label>
-            <input type="number" placeholder="enter your License number car/bike" v-model="license_number" class="form-control" required/>
+            <input type="number" placeholder="enter your License number car/bike " v-model="license_number" class="form-control" required/>
           </div>
 
           <div class="form-group col-md-4">
@@ -54,7 +54,7 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-3">
             <label>Age</label>
             <input
               type="text"
@@ -65,16 +65,27 @@
             />
           </div>
 
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-3">
             <label>Shift</label>
             <select class="form-control" v-model="shift"  required>
-              <option selected>Choose the Shift</option>
+              <option  disabled value="">Choose the Shift</option>
               <option>Day shift</option>
               <option>Night shift</option>
             </select>
           </div>
 
-          <div class="form-group col-md-4">
+           <div class="form-group col-md-3">
+            <label >Gender</label>
+            <select   class="form-control" v-model="gender"  required>
+              <option  disabled value="">Choose the Gender</option>
+              <option>Men</option>
+              <option>Woman</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+
+
+          <div class="form-group col-md-3">
             <label>Charge per each trip</label>
             <input type="text" v-model="charge_per_trip" placeholder="Enter charge fees in rupees" class="form-control"  required/>
           </div>
@@ -85,7 +96,7 @@
         <div class="form-group col-md-6">
           <label>Select the category</label>
           <select class="form-control" v-model="category"  required> 
-            <option selected>Choose the category</option>
+            <option  disabled value="">Choose the category</option>
             <option>Car service</option>
             <option>Bike service</option>
             <option>Courier service</option>
@@ -98,7 +109,7 @@
 
          <div class="form-group  col-md-6 ">
           <label>Present  Aadhar card number</label>
-          <input type="number" class="form-control"  v-model="aadhar_number" required/>
+          <input type="number" class="form-control" placeholder="enter the aadhar number" v-model="aadhar_number" required/>
         </div>
 
          </div>
@@ -133,6 +144,7 @@
           <th scope="col">category</th>
           <th scope="col">aadhar_number</th>
           <th scope="col">charge_per_trip</th>
+            <th scope="col">Gender</th>
         </tr>
       </thead>
       <tbody v-for=" (details,index) in olddata1" v-bind:key="index">
@@ -147,6 +159,7 @@
         <td>{{details.category}}</td>
          <td>{{details.aadhar_number}}</td>
         <td>{{details.charge_per_trip}}</td>
+        <td>{{details.gender}}</td>
       </tbody>
     </table>
           <button id="submit"  type="button" v-on:click.prevent="deleting" class="btn btn-secondary btn-lg btn-block">Reset</button>
@@ -163,12 +176,14 @@
 </template>
 
 <script>
+import {bus} from '../main';
 import {Tokenservice} from '../storage-token/token'
 import axios from 'axios';
 export default {
 
   data(){
     return{
+      gender:"",
       olddata1:"",
       start_point:"",
       end_point:"",
@@ -186,6 +201,8 @@ export default {
       memail:"",
       dummydelete:"",
       dummypost:"",
+      dummytitle:"",
+      musername:"",
     }
   },
 
@@ -201,10 +218,15 @@ export default {
       axios.delete('http://127.0.0.1:8000/userprofile_delete/'+this.mid+'/',axiosconfig)
       .then(res=>{
         console.log(res.data);
+        bus.$emit('titlechanged','vuetitle');
         this.dummydelete=res.data;
+        location.reload();
+        
         })
         .catch(err=>console.log(err));
 
+
+       
 
     },
 
@@ -228,6 +250,8 @@ export default {
       category:this.category,
       charge_per_trip:this.charge_per_trip,
       aadhar_number:this.aadhar_number,
+      username:this.musername,
+      gender:this.gender,
       },axiosconfig)
       .then(res=>{
         console.log(res);
@@ -246,12 +270,12 @@ export default {
   },
 
   created(){
+
     let axiosconfig={
       headers:{
           Authorization:"Token " + Tokenservice.getToken(),
       }
     }
-
 
     axios.get('http://127.0.0.1:8000/opensourceauth/userprofile',axiosconfig)
     .then(Response=> {
@@ -261,27 +285,33 @@ export default {
       {
         //console.log(mdata[obj].id);
         this.mownerid=mdata[obj].id;
-        this.email=mdata[obj].email;
+        this.memail=mdata[obj].email;
+        this.musername=mdata[obj].username;
+        
       }
       this.details=Response.data; 
       })
     .catch(error=>console.log(error.response.data))
 
-
-
+    
     axios.get('http://127.0.0.1:8000/opensourceauth/mainuserprofile',axiosconfig)
     .then(dresponse=>{
-       let olddata=dresponse.data
+       let olddata=dresponse.data;
          this.olddata1=olddata
       for(let obj1 in  olddata)
       {
         console.log(olddata[obj1].id);
         this.mid=olddata[obj1].id;
+       
+
       }
       console.log(dresponse.data);
      
     })
-    .catch(err=>console.log(err))
+    .catch(err=>console.log(err));
+
+     
+    
 
   }
 };
