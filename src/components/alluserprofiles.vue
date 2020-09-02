@@ -11,15 +11,15 @@
           alt="Card image cap"
         />
         <div class="card-body">
-          <h5 class="card-title">Name:{{detail.username}}</h5>
+          <h5 class="card-title"> Name:{{detail.username}}  </h5>
           <h5 class="card-title">start point:{{detail.start_point}}</h5>
           <h5 class="card-title">end point:{{detail.end_point}}</h5>
           <h5 class="card-title">Service:{{detail.category}}</h5>
-          <h5 class="card-title">Gender:{{detail.charge_per_trip}}</h5>
+          <h5 class="card-title">charge per trip:{{detail.charge_per_trip}} rs</h5>
           <h5 class="card-title">Shift:{{detail.shift}}</h5>
           <h5 class="card-title">Gender:{{detail.gender}}</h5>
           <h5 class="card-title">Ratings:5</h5>
-          <a href="#" class="btn btn-primary">Book Now</a>
+          <a  v-on:click="posting"  class="btn btn-primary"> Book Now {{detail.id}} </a>
         </div>
       </div>
     </div>
@@ -32,7 +32,17 @@ export default {
   data() {
     return {
       alldetails: "",
+
     };
+  },
+
+
+  methods:{
+
+    posting:function(){
+     alert('booked');
+    }
+
   },
 
   created() {
@@ -54,5 +64,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   margin-top: 30px;
+}
+
+.container{
+   text-transform: uppercase;
 }
 </style>
