@@ -19,7 +19,7 @@
           <h5 class="card-title">Shift:{{detail.shift}}</h5>
           <h5 class="card-title">Gender:{{detail.gender}}</h5>
           <h5 class="card-title">Ratings:5</h5>
-          <a  v-on:click="posting"  class="btn btn-primary"> Book Now {{detail.id}} </a>
+          <a  v-on:click="posting(detail.id,detail.username)"  class="btn btn-primary"> Book Now {{detail.id}} </a>
         </div>
       </div>
     </div>
@@ -28,10 +28,13 @@
 
 <script>
 import axios from "axios";
+import { Tokenservice } from "../storage-token/token";
 export default {
   data() {
     return {
       alldetails: "",
+      bookedname:"",
+      bookedphonenumber:"",
 
     };
   },
@@ -39,7 +42,14 @@ export default {
 
   methods:{
 
-    posting:function(){
+    posting:function(id,name){
+      axios.post('http://127.0.0.1:8000/opensourceauth/userbooking',{
+        driverid:id,
+        driver_name:name,
+        booked_name:this.bookedname,
+        booked_phonenumber:this.bookedphonenumber
+      }).then(res=>console.log(res))
+      .catch(err=>console.log(err.response.delete))
      alert('booked');
     }
 
@@ -52,6 +62,31 @@ export default {
         console.log(res.data);
         this.alldetails = res.data;
       });
+
+      let axiosConfig = {
+      headers: {
+        Authorization: "Token " + Tokenservice.getToken(),
+      },
+    };
+
+      axios
+      .get("http://127.0.0.1:8000/customerauth/customerprofile", axiosConfig)
+      .then((res) => {
+        console.log(res.data);
+        let cdetails=res.data;
+        this.customerdetails = res.data;
+        for(let obj1 in cdetails)
+        {
+            //console.log(cdetails[obj1].customer_name);
+            this.bookedname=cdetails[obj1].customer_name;
+            //console.log(cdetails[obj1].customer_phonenumber);
+            this.bookedphonenumber=cdetails[obj1].customer_phonenumber;
+        }
+      })
+      .catch((err) => console.log(err));
+
+
+
   },
 };
 </script>

@@ -23,8 +23,7 @@
               class="form-control"
               required
               :value="customer_name"
-            >{{customer_name}}  </p>
-           
+            >{{customer_name}}</p>
           </div>
 
           <div class="form-group col-md-6">
@@ -69,7 +68,17 @@
           </div>
         </div>
 
-        <button id="submit" v-on:click.prevent="posting" class="btn btn-secondary btn-lg btn-block">submit</button>
+        <button
+          id="submit"
+          v-on:click="posting"
+          class="btn btn-secondary btn-lg btn-block"
+        >submit</button>
+
+        <button
+          id="submit"
+          v-on:click.prevent="deleting"
+          class="btn btn-secondary btn-lg btn-block"
+        >Reset</button>
 
         <button
           id="submit"
@@ -79,6 +88,25 @@
         >logout</button>
       </div>
     </form>
+
+    <table class="table table-bordered" style="table-layout: auto width: 100%;  ">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">name</th>
+          <th scope="col">phone number</th>
+          <th scope="col">gender</th>
+          <th scope="col">age</th>
+        </tr>
+      </thead>
+      <tbody v-for=" (details,index) in customerdetails" v-bind:key="index">
+        <th scope="row">{{details.id}}</th>
+        <td>{{details.customer_name}}</td>
+        <td>{{details.customer_phonenumber}}</td>
+        <td>{{details.customer_gender}}</td>
+        <td>{{details.age}}</td>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -90,13 +118,32 @@ export default {
     return {
       customer_name: "",
       customer_gender: "",
-      customer_id: "",
+      customer_id: "",     //registered user id
       customer_phonenumber: "",
       age: "",
+      customerdetails: "",
+      mainid:"",
     };
   },
 
   methods: {
+    deleting: function () {
+
+      let axiosConfig = {
+        headers: {
+          Authorization: "Token " + Tokenservice.getToken(),
+        },
+      };
+
+      axios.delete(
+        "http://127.0.0.1:8000/customerauth/deletecustomerprofile/"+this.mainid+"/",axiosConfig
+      ).then(res=>{
+          console.log(res);
+          location.reload();
+          })
+      .catch(err=>console.log(err))
+    },
+
     posting: function () {
       let axiosConfig = {
         headers: {
@@ -104,17 +151,20 @@ export default {
         },
       };
 
-      axios.post(
-        "http://127.0.0.1:8000/customerauth/customerprofile",{
-         customer_id:this.customer_id,
-         customer_name:this.customer_name,
-         customer_gender:this.customer_gender,
-         customer_phonenumber:this.customer_phonenumber,
-         age:this.age
-        },axiosConfig)
-        .then(res=>console.log(res))
-        .catch(err=>console.log(err.response.data))
-
+      axios
+        .post(
+          "http://127.0.0.1:8000/customerauth/customerprofile",
+          {
+            customer_id: this.customer_id,
+            customer_name: this.customer_name,
+            customer_gender: this.customer_gender,
+            customer_phonenumber: this.customer_phonenumber,
+            age: this.age,
+          },
+          axiosConfig
+        )
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err.response.data));
     },
 
     logout: function () {
@@ -137,19 +187,25 @@ export default {
       )
       .then((res) => {
         console.log(res.data);
-        this.customer_id=res.data.id;
+        this.customer_id = res.data.id;
         this.customer_name = res.data.username;
       })
       .catch((err) => console.log(err.response.data));
 
-      axios.get('http://127.0.0.1:8000/customerauth/customerprofile',axiosConfig)
-      .then(res=>{
-          console.log(res.data)
-          
-          })
-      .catch(err=>console.log(err))
-
-
+    axios
+      .get("http://127.0.0.1:8000/customerauth/customerprofile", axiosConfig)
+      .then((res) => {
+        console.log(res.data);
+        let cdetails=res.data;
+        this.customerdetails = res.data;
+        for(let obj1 in cdetails)
+        {
+            console.log(cdetails[obj1].id)
+            this.mainid=cdetails[obj1].id;
+            
+        }
+      })
+      .catch((err) => console.log(err));
   },
 };
 </script>
