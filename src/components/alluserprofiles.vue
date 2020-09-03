@@ -1,7 +1,8 @@
 <template>
   <div>
     <div id="btns">
-      <button v-on:click="logout" class="btn btn-secondary">logout</button>
+      
+      <button  v-on:click="logout"  v-if="valid" class="btn btn-secondary">Hey, {{this.bookedname}} logout  </button>
     </div>
 
     <div class="container">
@@ -25,9 +26,9 @@
             <h5 class="card-title">Gender:{{detail.gender}}</h5>
             <h5 class="card-title">Ratings:5</h5>
             <a
-              v-on:click="posting(detail.id,detail.username)"
+              v-on:click="posting(detail.id,detail.username,detail.start_point,detail.end_point,detail.charge_per_trip)"
               class="btn btn-primary"
-            >Book Now {{detail.id}}</a>
+            >Book Now </a>
           </div>
         </div>
       </div>
@@ -48,21 +49,49 @@ export default {
       alldetails: "",
       bookedname: "",
       bookedphonenumber: "",
+      valid:localStorage.getItem('user-token'),
     };
   },
 
   methods: {
-    posting: function (id, name) {
+    posting: function (id, name,starting_point,ending_point,charges_per) {
       axios
         .post("http://127.0.0.1:8000/opensourceauth/userbooking", {
           driverid: id,
           driver_name: name,
           booked_name: this.bookedname,
           booked_phonenumber: this.bookedphonenumber,
+          startingpoint:starting_point,
+          endingpoint:ending_point,
+          charges:charges_per,
         })
         .then((res) => console.log(res))
         .catch((err) => console.log(err.response.delete));
       alert("booked");
+      this.$router.push('/feedback');
+
+
+
+        
+      let axiosconfig = {
+        headers: {
+          Authorization: "Token " + Tokenservice.getToken(),
+        },
+      };
+
+      axios
+        .delete(
+          "http://127.0.0.1:8000/userprofile_delete/" + id + "/",
+          axiosconfig
+        )
+        .then((res) => {
+          console.log(res.data);
+          
+        })
+        .catch((err) => console.log(err));
+    
+
+
     },
 
     logout:function(){

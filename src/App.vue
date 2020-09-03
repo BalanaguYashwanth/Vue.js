@@ -3,7 +3,7 @@
    <router-view>
 
     <div>
-     
+     <headers> </headers>
     </div> 
    
     </router-view>
@@ -14,11 +14,13 @@
 
 <script>
 //import HelloWorld from './components/HelloWorld.vue'
-
+import headers from './components/headers'
 export default {
   name: 'App',
   components: {
     //HelloWorld
+    headers,
+
   }
 }
 </script>

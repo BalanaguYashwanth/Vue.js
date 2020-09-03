@@ -322,7 +322,7 @@ export default {
     axios
       .get("http://127.0.0.1:8000/opensourceauth/userprofile", axiosconfig)
       .then((Response) => {
-        //console.log(Response.data);
+        console.log(Response.data);
         let mdata = Response.data;
         for (let obj in mdata) {
           //console.log(mdata[obj].id);
@@ -343,7 +343,7 @@ export default {
           console.log(olddata[obj1].id);
           this.mid = olddata[obj1].id;
         }
-        console.log(dresponse.data);
+       // console.log(dresponse.data);
       })
       .catch((err) => console.log(err));
   },

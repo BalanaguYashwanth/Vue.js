@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div id="title">
 
-        <p class="display-3 text-center" id="title">Owner Service page</p>
-       <router-link to='/ownerpage'> Owner page </router-link>
-       <router-link to='/bookings'> bookings  </router-link>
-        <router-link to='/suggestions'> suggestions </router-link>
+        <p class="display-2" >Owner Service page</p>
+       <router-link to='/ownerpage'> Owner page ||</router-link>
+       <router-link to='/bookings'> Bookings || </router-link>
+        <router-link to='/requests'> Requests -- Suggestions </router-link>
 
 
 
@@ -17,6 +17,11 @@ export default {
 }
 </script>
 
-<style >
+<style>
+
+#title{
+    text-align: center;
+    
+}
 
 </style>

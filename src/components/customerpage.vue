@@ -1,12 +1,18 @@
 <template>
   <div id="mainbody">
     <div></div>
-    <div>
-      <p class="display-3 text-center" id="title">Profile page</p>
+    <div  id="title">
+      <p class="display-3 text-center">
+        Profile page
+        </p>
+              <router-link to="/alluserprofiles" > Home  </router-link>
+
     </div>
     <form>
       <div class="container">
+        
         <div class="text-center m-3">
+          
           <img
             src="https://info-ted.eu/wp-content/uploads/2019/12/profile-photo.png"
             class="rounded"

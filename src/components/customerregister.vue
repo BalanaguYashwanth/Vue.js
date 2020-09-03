@@ -33,6 +33,10 @@
         </div>
 
         <button v-on:click.prevent="register" class="btn btn-secondary">Submit</button>
+
+        <router-link to='/ownerlogin'>
+            <button id="forward"  class="btn btn-secondary"> > </button>
+         </router-link>
         
       </form>
       {{incorrect}}
@@ -83,7 +87,6 @@ export default {
     }
   }
 
- 
 
 };
 </script>
@@ -96,4 +99,10 @@ export default {
   text-align: center;
   margin-top: 160px;
 }
+
+#forward{
+  float: right;
+
+}
+
 </style>

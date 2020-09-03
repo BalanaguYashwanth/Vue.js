@@ -8,6 +8,8 @@ import customerregister from './components/customerregister'
 import bookings from './components/bookings'
 import suggestions from './components/suggestions'
 import headers from './components/headers'
+import requests from './components/requests'
+import feedback from './components/feedbackbookings'
 
 export default[
     {path:'/customerpage',component:customerpage},
@@ -20,5 +22,8 @@ export default[
     {path:'/bookings',component:bookings},
     {path:'/suggestions',component:suggestions},
     {path:'/headers',component:headers},
+    {path:'/requests',component:requests},
+    {path:'/feedback',component:feedback},
 ]
+
 
