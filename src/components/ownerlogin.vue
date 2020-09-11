@@ -30,20 +30,18 @@ export default {
       incorrect1:"",
     };
   },
-
   methods:{
       posting:function() {
           if(this.email!="" && this.password!="")
           {
-
-          axios.post('http://127.0.0.1:8000/opensourceauth/login',{
+          axios.post('http://127.0.0.1:8000/owner/login',{
               username:this.username,
               password:this.password,
           })
           .then(Response=>{
               console.log(Response.data.token);
               localStorage.setItem('user-token',Response.data.token);
-              this.$router.push('/ownerpage')
+              this.$router.push('/component')
           })
           .catch(error=>{
               console.log(error);
@@ -55,9 +53,6 @@ export default {
           }
       }
   }
-
-
-
 };
 </script>
 

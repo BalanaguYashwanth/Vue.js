@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <p class="display-3" id="title">Customer Registration</p>
+      <p class="display-1" id="title">Owner Registration</p>
       <form>
         <div class="form-row">
           <div class="form-group col-md-6">
@@ -33,21 +33,22 @@
         </div>
 
         <button v-on:click.prevent="register" class="btn btn-secondary">Submit</button>
-
-        <router-link to='/ownerlogin'>
+         
+         <router-link to='/ownerlogin'>
             <button id="forward"  class="btn btn-secondary"> > </button>
          </router-link>
         
       </form>
+      
       {{incorrect}}
     </div>
+    
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 export default {
-
   data(){
     return{
       first_name:"",
@@ -58,13 +59,11 @@ export default {
       incorrect:"",
     }
   },
-
-
   methods:{
     register:function(){
       if(this.first_name!="" &&  this.last_name!="" && this.username!="" && this.password!="" && this.email!="")
       {
-      axios.post('http://127.0.0.1:8000/customerauth/customerregister',{
+      axios.post('http://127.0.0.1:8000/owner/register',{
         first_name:this.first_name,
         last_name:this.last_name,
         username:this.username,
@@ -73,7 +72,7 @@ export default {
       })
       .then(response=>{
         console.log(response);
-        this.$router.push('/customerlogin');
+        this.$router.push('/ownerlogin');
          }
       )
       .catch(error=>{
@@ -86,8 +85,7 @@ export default {
       }
     }
   }
-
-
+ 
 };
 </script>
 
@@ -99,10 +97,7 @@ export default {
   text-align: center;
   margin-top: 160px;
 }
-
 #forward{
   float: right;
-
 }
-
 </style>

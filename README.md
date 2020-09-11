@@ -1,4 +1,4 @@
-# project1-app
+# component-parts
 
 ## Project setup
 ```
