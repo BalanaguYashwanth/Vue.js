@@ -3,7 +3,8 @@
     <div class="container">
       <button id="logout" v-on:click="logout">logout</button>
       <h1 class="display-2" id="title">Owner page</h1>
-      <form id="mainbody">
+
+      <form id="mainbody" v-if="callaccess()">
         <div class="form-row d-flex justify-content-center">
           <div class="input-group col-md-6">
             <select class="custom-select" v-model="selectcomponent">
@@ -45,6 +46,19 @@
 
         <button class="btn btn-secondary my-3" v-on:click="posting">submit</button>
       </form>
+
+      <form v-else>
+      
+        <div id="title" class="container ">
+        <h2 class="display-2 "> Thank You For Login </h2>
+        <p class="display-4"> We process your request </p>
+        <h4 class="display-5"> Wait for activate your account </h4>
+      </div>
+
+
+      </form>
+  
+
     </div>
   </div>
 </template>
@@ -64,6 +78,7 @@ export default {
       description: "",
       mainid: "",
       mainfilter: "",
+      access:"",
     };
   },
 
@@ -114,8 +129,21 @@ export default {
 
       for (var obj in dataprofile) {
         this.mainid = dataprofile[obj].id;
+        this.access=dataprofile[obj].is_active;
+
       }
       return this.mainid;
+    },
+
+        callaccess: function () {
+      var dataprofile = this.$store.state.profile;
+
+      for (var obj in dataprofile) {
+
+        this.access=dataprofile[obj].is_active;
+
+      }
+      return this.access;
     },
 
     call: function () {
@@ -129,7 +157,12 @@ export default {
 
       return alldata;
     },
+
+   
+
   },
+
+ 
 
   created() {
     return this.$store.dispatch("getdata");

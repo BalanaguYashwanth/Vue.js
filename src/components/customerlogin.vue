@@ -1,13 +1,13 @@
 <template>
   <div id="title" class="container">
-    <h2 class="display-2">Owner LogIn</h2>
+    <h2 class="display-2">Customer LogIn</h2>
     <div>
       <div class="form-group">
         <input type="text" v-model="username" placeholder="enter the username" class="form-control"  />
       </div>
 
       <div class="form-group">
-        <input
+        <input  
           type="password"
           v-model="password"
           placeholder="enter the password"
@@ -41,7 +41,7 @@ export default {
           .then(Response=>{
               console.log(Response.data.token);
               localStorage.setItem('user-token',Response.data.token);
-              this.$router.push('/component')
+              this.$router.push('/customer')
               location.reload();
           })
           .catch(error=>{

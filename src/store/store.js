@@ -35,10 +35,6 @@ export const store = new Vuex.Store({
            state.componentfilter=allfilterdata
            
        }
-
-
-
-
     },
 
     actions: {
@@ -65,30 +61,7 @@ export const store = new Vuex.Store({
                 })
         },
 
-        // filterprofileaction:(state,context)=>{
-                
-        //     let profile = state.profile
-        //     let ceach = state.component
-        //     var mainarray=[];
 
-        //     for(let obj in profile)
-        //     {
-        //         for(let obj1 in ceach)
-        //         {
-        //             if(profile[obj].id == ceach[obj1].user_id)
-        //             {
-        //                //console.log(ceach[obj1])
-        //                mainarray.push(ceach[obj1])
-        //                console.log(mainarray)
-        //             }
-        //         }
-                
-        //     } 
-
-        //    context.commit('filterprofile',mainarray)
-
-                
-        // }
 
     }
 });
