@@ -34,7 +34,7 @@
 
         <button v-on:click.prevent="register" class="btn btn-secondary">Submit</button>
          
-         <router-link to='/ownerlogin'>
+         <router-link to='/customerlogin'>
             <button id="forward"  class="btn btn-secondary"> > </button>
          </router-link>
         
@@ -91,9 +91,7 @@ export default {
 
 <style scoped >
 #title {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  
   text-align: center;
   margin-top: 160px;
 }

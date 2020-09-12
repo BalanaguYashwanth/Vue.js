@@ -6,11 +6,21 @@
 
       <form id="mainbody" v-if="callaccess()">
         <div class="form-row d-flex justify-content-center">
+          <div class="input-group col-md-6" >
+
+            <select class="custom-select" v-model="selectreference">
+              <option disabled value>select the user reference id</option>
+              <option v-for="(ceach,index) in allcdetails" v-bind:key="index">
+                <p>{{ceach.reference_number}}  ({{ceach.user_name}})  </p> 
+              </option>
+              
+            </select>
+          </div>
           <div class="input-group col-md-6">
             <select class="custom-select" v-model="selectcomponent">
               <option disabled value>select the component</option>
               <option v-for="(each,index) in call()" v-bind:key="index">
-                <p>{{each.name}}</p>
+                <p>{{each.cname}}</p>
               </option>
             </select>
 
@@ -42,9 +52,9 @@
               placeholder="enter the description"
             />
           </label>
+        <mark>{{info}}</mark>
         </div>
-
-        <button class="btn btn-secondary my-3" v-on:click="posting">submit</button>
+        <button class="btn btn-secondary my-3" v-on:click.prevent="posting">submit</button>
       </form>
 
       <form v-else>
@@ -57,7 +67,6 @@
 
 
       </form>
-  
 
     </div>
   </div>
@@ -79,6 +88,9 @@ export default {
       mainid: "",
       mainfilter: "",
       access:"",
+      allcdetails:'',
+      selectreference:'',
+      info:'',
     };
   },
 
@@ -99,7 +111,7 @@ export default {
       axios
         .post("http://127.0.0.1:8000/api/v5/componentEach/", {
           user_id: this.callprofile(),
-          name: text,
+          cname: text,
         })
         .then((res) => {
           console.log(res);
@@ -116,9 +128,16 @@ export default {
           component_name: this.selectcomponent,
           title: this.title,
           description: this.description,
+          reference_id:this.selectreference,
         })
         .then((res) => {
           console.log(res);
+          this.info=res.statusText;
+
+          setTimeout(() => {
+            location.reload();
+            },3000);
+
         })
 
         .catch((err) => console.log(err.response.data));
@@ -158,13 +177,16 @@ export default {
       return alldata;
     },
 
-   
-
   },
 
  
-
   created() {
+    axios.get('http://127.0.0.1:8000/api/v5/customerdata/')
+    .then(res=>{
+      console.log(res.data);
+      this.allcdetails=res.data;
+      })
+    .catch(err=>console.log(err.reponse.data))
     return this.$store.dispatch("getdata");
   },
 

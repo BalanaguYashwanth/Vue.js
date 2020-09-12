@@ -9,7 +9,8 @@ export const store = new Vuex.Store({
     state: {
         component: [],
         profile: [],
-        componentfilter:[]
+        componentfilter:[],
+        allcomponent:[],
     },
 
     getters: {
@@ -34,14 +35,30 @@ export const store = new Vuex.Store({
        filterprofile:(state,allfilterdata)=>{
            state.componentfilter=allfilterdata
            
+       },
+
+       assignalldata:(state,allnewdatas)=>{
+           state.allcomponent=allnewdatas
        }
     },
 
     actions: {
+
+        getalldata:function(context){
+            axios.get('http://127.0.0.1:8000/api/v5/component/')
+            .then(res => {
+                //console.log(res)
+                context.commit('assignalldata',res.data)
+            
+            })
+            .catch(err => console.log(err.response.data))
+        },
+
+
         getdata: function (context)  {
             axios.get('http://127.0.0.1:8000/api/v5/componentEach/')
                 .then(res => {
-                    //console.log(res.data)
+                    console.log(res.data)
                     context.commit('assigndata', res.data)
                 })
                 .catch(err => err.response.data)
@@ -60,7 +77,6 @@ export const store = new Vuex.Store({
                     context.commit('assignprofile', res.data);
                 })
         },
-
 
 
     }

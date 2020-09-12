@@ -3,37 +3,106 @@
     <div class="container">
       <button id="logout" v-on:click="logout">logout</button>
       <h1 class="display-2" id="title">Customer page</h1>
+      <form  v-if="getaccess()" >
+        <div class="row justify-content-center align-items-center h-100" >
+          <div id="row" class="form-group  col-md-7 ">
+            <label>Input</label>
+            <input type="number"  v-model="referencenum" placeholder="enter your reference number"  class="form-control" />
+             {{info}}
+            <br>
+           <button class="btn btn-secondary" v-on:click.prevent="posting" >  submit </button>
+          </div>
+        </div>
+      </form>
+     <form v-else>
+         <div id="title" class="container ">
+        <h2 class="display-2 "> Thank You For Login </h2>
+        <p class="display-4"> We process your request </p>
+        <h4 class="display-5"> Wait for activate your account </h4>
+      </div>
 
+     </form>
     </div>
   </div>
 </template>
 
 <script>
-//import axios from "axios";
+import axios from "axios";
 import swal from "sweetalert2";
 window.swal = swal;
 export default {
 
-    methods:{
-    logout:function(){
-        this.$router.push('/customerlogin')
-    }
-    }
+       data(){
+          return{
+              username:'',
+              referencenum:'',
+              info:'',
+              access:'',
+          }
+      },
+
+  methods: {
+
+    logout: function () {
+      this.$router.push("/customerlogin");
+    },
+
+    posting:function(){
+        axios.post('http://127.0.0.1:8000/api/v5/customerdata/',{
+            user_name:this.getprofile(),
+            reference_number:this.referencenum,
+        }).then( res => {
+            console.log(res);
+            this.info=res.statusText;
+            swal.fire("Updated the data", "soon you will get the updates", "success");
+            })
+        .catch( err => {
+            console.log(err.response.data)
+            this.info=err.response.data
+            })
+    },
+
+    getprofile:function(){
+        var cdata = this.$store.state.profile
+        for( let obj in cdata )
+        {
+            this.username=cdata[obj].username
+        }
+        return this.username
+
+    },
+
+       getaccess:function(){
+        var cdata = this.$store.state.profile
+        for( let obj in cdata )
+        {
+            this.access=cdata[obj].is_active;
+        }
+        return this.access
+    },
+
+  },
+
+  created(){
+      this.$store.dispatch('getprofile')
+  }
 
 
-}
+
+};
 </script>
 
 <style scoped>
-
-#logout{
-    float: right;
+#logout {
+  float: right;
 }
-#mainbody {
+#row {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 200px;
+  text-align: center;
+  
 }
 
 #title {
@@ -42,10 +111,16 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 130px;
+  margin-top: 100px;
+}
+
+#input{
+   text-align: center;
 }
 
 label {
   display: block;
 }
+
+
 </style>
