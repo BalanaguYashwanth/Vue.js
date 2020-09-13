@@ -2,7 +2,12 @@
   <div>
     <div class="container">
       <button id="logout" v-on:click="logout">logout</button>
-      <h1 class="display-2" id="title">Customer page</h1>
+      <div id="title">
+      <h1 class="display-2" >
+        Customer page
+        </h1>
+         <router-link to="/updates">  Updates </router-link>
+      </div>
       <form  v-if="getaccess()" >
         <div class="row justify-content-center align-items-center h-100" >
           <div id="row" class="form-group  col-md-7 ">
