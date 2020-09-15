@@ -5,6 +5,8 @@ import Routers from './router'
 import Vuesimplealert from 'vue-simple-alert'
 import {store} from './store/store'
 
+export const bus = new Vue()
+
 Vue.use(Vuerouters)
 Vue.use(Vuesimplealert,{reverseButtons:true})
 

@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
         profile: [],
         componentfilter:[],
         allcomponent:[],
+       
     },
 
     getters: {
@@ -21,7 +22,8 @@ export const store = new Vuex.Store({
                 }
             })
             return sale
-        }
+        },
+       
     },
 
     mutations: {
@@ -39,15 +41,19 @@ export const store = new Vuex.Store({
 
        assignalldata:(state,allnewdatas)=>{
            state.allcomponent=allnewdatas
-       }
+       },
+
+
     },
 
+
     actions: {
+        
 
         getalldata:function(context){
             axios.get('http://127.0.0.1:8000/api/v5/component/')
             .then(res => {
-                //console.log(res)
+                console.log(res.data)
                 context.commit('assignalldata',res.data)
             
             })

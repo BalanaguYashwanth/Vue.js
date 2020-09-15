@@ -25,12 +25,10 @@
         <p class="display-4"> We process your request </p>
         <h4 class="display-5"> Wait for activate your account </h4>
       </div>
-
      </form>
     </div>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 import swal from "sweetalert2";

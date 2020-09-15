@@ -5,6 +5,7 @@ import customerregister from './components/customerregister'
 import customerlogin from './components/customerlogin'
 import customer from './components/customer'
 import updates from './components/updates'
+import updatesComponents from './components/updates-components'
 
 export default[
     {path:'/ownerregister',component:owneregister},
@@ -13,5 +14,6 @@ export default[
     {path:'/customerregister',component:customerregister},
     {path:'/customerlogin',component:customerlogin},
     {path:'/customer',component:customer},
-    {path:'/updates',component:updates}
+    {path:'/updates',component:updates, props: true},
+    {path:'/updatesComponents',component:updatesComponents, props: true }
 ]
