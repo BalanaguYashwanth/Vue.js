@@ -11,7 +11,8 @@ export const store = new Vuex.Store({
         profile: [],
         componentfilter:[],
         allcomponent:[],
-       
+        updatedcomponents:[],
+        cid:[],
     },
 
     getters: {
@@ -43,12 +44,24 @@ export const store = new Vuex.Store({
            state.allcomponent=allnewdatas
        },
 
+       getcomponents:(state,getdata)=>{
+           state.updatedcomponents=getdata
+       },
+
+       getid:(state,id)=>{
+           state.cid=id
+           console.log(state.cid)
+       }
 
     },
 
 
     actions: {
-        
+        getinputcomponents:function(context,getdata){
+            setTimeout(()=>{
+                context.commit('getcomponents',getdata)
+            },2000)
+        },
 
         getalldata:function(context){
             axios.get('http://127.0.0.1:8000/api/v5/component/')

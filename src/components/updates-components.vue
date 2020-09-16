@@ -1,21 +1,19 @@
 <template>
     <div class="container">
-        <div id="title">
-            <h1 class="display-3"> Components </h1>
-            
-            <div v-for="(item,index) in getlocal()" v-bind:key="index" >
-                {{item}}
 
-            </div>
-            {{getlocal()}}
-          
-        
-        </div>
+    <button id="logout" v-on:click="logout">logout</button>
+    <h1 class="display-2" id="title">Updates</h1>
+
+     {{allindividualdetails}}
+
+
     </div>
 </template>
 <script>
+import datamixin from '../mixins/datamixin'
 export default {
 
+   
     data(){
         return{
             username:"",
@@ -23,13 +21,14 @@ export default {
         }
     },
 
+    
     methods:{
-    getlocal:function(){
-        let uniquedata1=localStorage.getItem('uniquedata');
-        let mainarray=uniquedata1.split(',')
-        
-        return mainarray
+
+    logout: function () {
+      this.$router.push("/customerlogin");
     },
+
+
 
     user:function(){
         let user= this.$store.state.profile
@@ -41,16 +40,14 @@ export default {
 
     },    
 
-    created(){
-       
-    },
+  
 
     mounted(){
         return this.$store.dispatch("getprofile");
     },
 
 
-   
+  mixins:[datamixin]
 
 
 }
