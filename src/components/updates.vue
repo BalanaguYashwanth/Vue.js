@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <button id="logout" v-on:click="logout">logout</button>
-    <h1 class="display-2" id="title">Updates</h1>
+     <div id="title">
+        <slot name="customer">  </slot>         
+      </div>
     <form  >
      <div v-show="caccess">
       <div class="form-row">

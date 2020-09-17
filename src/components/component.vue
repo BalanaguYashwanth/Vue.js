@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="container">
-      <button id="logout" v-on:click="logout">logout</button>
-      <h1 class="display-2" id="title">Owner page</h1>
-
+     
+      <div id="title">
+               <button id="logout" v-on:click="logout">logout</button>
+      <slot name="owner"> </slot>
+      </div>
       <form id="mainbody" v-if="callaccess()">
         <div class="form-row d-flex justify-content-center">
           <div class="input-group col-md-6" >
