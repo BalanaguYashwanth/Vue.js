@@ -1,21 +1,18 @@
 <template>
   <div>
     <div class="container">
-     
       <div id="title">
-               <button id="logout" v-on:click="logout">logout</button>
-      <slot name="owner"> </slot>
+        <button id="logout" v-on:click="logout">logout</button>
+        <slot name="owner"></slot>
       </div>
       <form id="mainbody" v-if="callaccess()">
         <div class="form-row d-flex justify-content-center">
-          <div class="input-group col-md-6" >
-
+          <div class="input-group col-md-6">
             <select class="custom-select" v-model="selectreference">
               <option disabled value>select the user reference id</option>
               <option v-for="(ceach,index) in allcdetails" v-bind:key="index">
-                <p>{{ceach.reference_number}}  ({{ceach.user_name}})  </p> 
+                <p>{{ceach.reference_number}} ({{ceach.user_name}})</p>
               </option>
-              
             </select>
           </div>
           <div class="input-group col-md-6">
@@ -32,7 +29,7 @@
           </div>
         </div>
 
-        <div class="form-groups my-4">
+        <div class="form-group my-4">
           <label>
             title
             <input
@@ -43,7 +40,7 @@
             />
           </label>
         </div>
-        <div class="form-groups">
+        <div class="form-group">
           <label>
             description
             <textarea
@@ -54,22 +51,24 @@
               placeholder="enter the description"
             />
           </label>
-        <mark>{{info}}</mark>
+
+          <div class="form-group">
+            <label>Upload your image</label>
+            <input type="file" class="form-control-file" @change="onfileselect" />
+          </div>
+
+          <mark>{{info}}</mark>
         </div>
         <button class="btn btn-secondary my-3" v-on:click.prevent="posting">submit</button>
       </form>
 
       <form v-else>
-      
-        <div id="title" class="container ">
-        <h2 class="display-2 "> Thank You For Login </h2>
-        <p class="display-4"> We process your request </p>
-        <h4 class="display-5"> Wait for activate your account </h4>
-      </div>
-
-
+        <div id="title" class="container">
+          <h2 class="display-2">Thank You For Login</h2>
+          <p class="display-4">We process your request</p>
+          <h4 class="display-5">Wait for activate your account</h4>
+        </div>
       </form>
-
     </div>
   </div>
 </template>
@@ -89,14 +88,19 @@ export default {
       description: "",
       mainid: "",
       mainfilter: "",
-      access:"",
-      allcdetails:'',
-      selectreference:'',
-      info:'',
+      access: "",
+      allcdetails: "",
+      selectreference: "",
+      info: "",
+      selectfile: null,
     };
   },
 
   methods: {
+    onfileselect: function (event) {
+      this.selectfile = event.target.files[0];
+    },
+
     logout: function () {
       localStorage.removeItem("user-token");
       this.$router.push("/ownerlogin");
@@ -124,24 +128,30 @@ export default {
     },
 
     posting: function () {
-      axios
-        .post("http://127.0.0.1:8000/api/v5/component/", {
-          user: this.callprofile(),
-          component_name: this.selectcomponent,
-          title: this.title,
-          description: this.description,
-          reference_id:this.selectreference,
-        })
+      var fd = new FormData();
+      fd.append("image", this.selectfile);
+      fd.append('user', this.callprofile())
+      fd.append('component_name', this.selectcomponent)
+      fd.append('title', this.title)
+      fd.append('description', this.description)
+      fd.append('reference_id', this.selectreference)
+
+        axios({
+        method: 'post',
+        url: 'http://127.0.0.1:8000/api/v5/component/',
+        data: fd,
+        headers: {
+        'content-type': `multipart/form-data; boundary=${fd._boundary}`,
+        },
+    })
         .then((res) => {
           console.log(res);
-          this.info=res.statusText;
+          this.info = res.statusText;
 
           setTimeout(() => {
             location.reload();
-            },3000);
-
+          }, 3000);
         })
-
         .catch((err) => console.log(err.response.data));
     },
 
@@ -150,19 +160,16 @@ export default {
 
       for (var obj in dataprofile) {
         this.mainid = dataprofile[obj].id;
-        this.access=dataprofile[obj].is_active;
-
+        this.access = dataprofile[obj].is_active;
       }
       return this.mainid;
     },
 
-        callaccess: function () {
+    callaccess: function () {
       var dataprofile = this.$store.state.profile;
 
       for (var obj in dataprofile) {
-
-        this.access=dataprofile[obj].is_active;
-
+        this.access = dataprofile[obj].is_active;
       }
       return this.access;
     },
@@ -178,17 +185,16 @@ export default {
 
       return alldata;
     },
-
   },
 
- 
   created() {
-    axios.get('http://127.0.0.1:8000/api/v5/customerdata/')
-    .then(res=>{
-      console.log(res.data);
-      this.allcdetails=res.data;
+    axios
+      .get("http://127.0.0.1:8000/api/v5/customerdata/")
+      .then((res) => {
+        console.log(res.data);
+        this.allcdetails = res.data;
       })
-    .catch(err=>console.log(err.reponse.data))
+      .catch((err) => console.log(err.reponse.data));
     return this.$store.dispatch("getdata");
   },
 
