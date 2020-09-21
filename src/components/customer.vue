@@ -60,6 +60,18 @@ export default {
   methods: {
 
     logout: function () {
+      let axiosConfig = {
+        headers: {
+          Authorization: "Token " + localStorage.getItem("user-token"),
+        },
+      };
+
+      axios
+        .get("http://127.0.0.1:8000/owner/logout", axiosConfig)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err.response.data));
+
+      localStorage.removeItem("user-token");
       this.$router.push("/customerlogin");
     },
 

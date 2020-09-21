@@ -1,37 +1,42 @@
 <template>
   <div class="container">
     <button id="logout" v-on:click="logout">logout</button>
-     <div id="title">
-        <slot name="customer">  </slot>         
-      </div>
-    <form  >
-     <div v-show="caccess">
-      <div class="form-row">
-        <div
-          class="shadow p-3 mb-3 bg-white rounded col-md-6"
-          v-for="(ceach,index) in allindividualprojects()"
-          v-bind:key="index"
-        >
-          <div class="card-deck">
-            <div class="card border-0" v-on:click="inputid=ceach">
-              <div class="card-body">
-                <p>order id:-</p>
-                <h5 class="card-title display-4">{{ceach}}</h5>
+    <div id="title">
+      <slot name="customer"></slot>
+    </div>
+    <form>
+      <div v-show="caccess">
+        <div class="form-row">
+          <div
+            class="shadow p-3 mb-3 bg-white rounded col-md-6"
+            v-for="(ceach,index) in allindividualprojects()"
+            v-bind:key="index"
+          >
+            <div class="card-deck">
+              <div class="card border-0" v-on:click="inputid=ceach">
+                <div class="card-body">
+                  <p>order id:-</p>
+                  <h5 class="card-title display-4">{{ceach}}</h5>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div v-if="inputid == ceach " >
-           {{allindividualdetails}}
-            <button class="btn btn-secondary" style="float:right" type="button" disabled>
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              Loading...
-            </button>
+            <div v-if="inputid == ceach ">
+              {{allindividualdetails}}
+              <button
+                class="btn btn-secondary"
+                style="float:right"
+                type="button"
+                disabled
+              >
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- <div class="form-row">
+        <!-- <div class="form-row">
         <div class="form-group col-md-6 mx-auto">
           <select class="custom-select" v-model="inputid">
             <option disabled value>Choose the id</option>
@@ -43,71 +48,73 @@
 
         <div class="form-group col-md-6 mx-auto">
           <select class="custom-select" v-model="externalinput">
-            <option disabled value>Choose the product</option> -->
-            <!-- <option v-for="(ceach,index) in allindividualdetails()" v-bind:key="index">
+        <option disabled value>Choose the product</option>-->
+        <!-- <option v-for="(ceach,index) in allindividualdetails()" v-bind:key="index">
               <p>{{ceach}}</p>
-            </option> -->
-          <!-- </select>
+        </option>-->
+        <!-- </select>
         </div>
-      </div> -->
+        </div>-->
 
-      <div>
-        <div
-          class="card bg-light my-3"
-          v-for=" (detailed,index) in alldetails()"
-          v-bind:key="index"
-        >
-          <div class="card-body">
-            <h5 class="card-title">title:{{detailed.title}}</h5>
-            <p class="card-text">description: {{detailed.description}}</p>
-          </div>
-          <div class="card-footer" id="mainbody">
-            <small class="text-muted">
-              Last updated {{detailed.timestamp}} ago
-              <br />
-              {{detailed.component_name}}
-            </small>
+        <div>
+          <div
+            class="card bg-light my-3"
+            v-for=" (detailed,index) in alldetails()"
+            v-bind:key="index"
+          >
+            <div class="card-body">
+              <h5 class="card-title">title:{{detailed.title}}</h5>
+              <p class="card-text">description: {{detailed.description}}</p>
+            </div>
+            <div class="card-footer" id="mainbody">
+              <small class="text-muted">
+                Last updated {{detailed.timestamp}} ago
+                <br />
+                {{detailed.component_name}}
+              </small>
+            </div>
           </div>
         </div>
       </div>
-      </div>
 
-    
-      <div v-show=!caccess>
-         
-       <div v-show=ccontent  > 
-         <div>
-           <button  v-on:click="backbtn1">back</button>
-         </div>
-         <div class="form-row">
-        <div
-          class="shadow p-3 mb-3 bg-white rounded col-md-6 "
-          v-for="(ceach1,index) in this.$store.state.updatedcomponents"
-          v-bind:key="index"
-        >
-          <div class="card-deck">
-            <div class="card border-0" v-on:click=" externalinput=ceach1,dummycontent1=true " >
-              <div class="card-body" >
-                <p></p>
-                <h5 class="card-title display-4">{{ceach1}}</h5>
+      <div v-show="!caccess">
+        <div v-show="ccontent">
+          <div>
+            <button v-on:click="backbtn1">back</button>
+          </div>
+          <div class="form-row">
+            <div
+              class="shadow p-3 mb-3 bg-white rounded col-md-6"
+              v-for="(ceach1,index) in this.$store.state.updatedcomponents"
+              v-bind:key="index"
+            >
+              <div class="card-deck">
+                <div class="card border-0" v-on:click=" externalinput=ceach1,dummycontent1=true ">
+                  <div class="card-body">
+                    <p></p>
+                    <h5 class="card-title display-4">{{ceach1}}</h5>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-    </div>
-    </div>
-    </div>
+      </div>
 
-      <div  v-show=!ccontent>
-         <button id="back" v-on:click.prevent="backbtn">back</button>
+      <div v-show="!ccontent">
+        <button id="back" v-on:click.prevent="backbtn">back</button>
         <div
           class="card bg-light my-3"
           v-for=" (detailed,index) in alldetails()"
           v-bind:key="index"
         >
-        
           <div class="card-body">
             <h5 class="card-title">title:{{detailed.title}}</h5>
+            <p class="card-text">percentage: {{detailed.percentage}}</p>
+            <p class="card-text">
+              Preview Image:
+              <a v-bind:href="detailed.image">{{detailed.image.slice(58)}}</a>
+            </p>
             <p class="card-text">description: {{detailed.description}}</p>
           </div>
           <div class="card-footer" id="mainbody">
@@ -119,48 +126,53 @@
           </div>
         </div>
       </div>
-
     </form>
-    
   </div>
 </template>
 <script>
-import datamixin from '../mixins/datamixin'
+import axios from 'axios'
+import datamixin from "../mixins/datamixin";
 export default {
   data() {
     return {
-      caccess:true,
+      caccess: true,
       username: "",
       reference: "",
       externalinput: "",
       allcomponentdetails: "",
       inputid: "",
-      ccontent:true,
-      back:'',
-      dummycontent1:true,
+      ccontent: true,
+      back: "",
+      dummycontent1: true,
     };
   },
-  
+
   methods: {
-
-    backbtn1:function()
-    {
-      location.reload()
-
+    backbtn1: function () {
+      location.reload();
     },
 
-    backbtn:function(){
-      this.dummycontent1=!this.dummycontent1
-     },
-
+    backbtn: function () {
+      this.dummycontent1 = !this.dummycontent1;
+    },
 
     logout: function () {
+      let axiosConfig = {
+        headers: {
+          Authorization: "Token " + localStorage.getItem("user-token"),
+        },
+      };
+
+      axios
+        .get("http://127.0.0.1:8000/owner/logout", axiosConfig)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err.response.data));
+
+      localStorage.removeItem("user-token");
       this.$router.push("/customerlogin");
     },
 
     alldetails: function () {
-      
-
       let updatedata = this.$store.state.allcomponent;
       let allupdateddata = updatedata.filter((detail) => {
         let filter = detail.reference_id.split(" ")[1];
@@ -169,15 +181,15 @@ export default {
 
         if (filter == "(" + this.user() + ")") {
           if (filterid == this.inputid) {
-            console.log(this.inputid)
+            console.log(this.inputid);
             if (filtercomponent == this.externalinput) {
-              this.ccontent=!this.dummycontent1
+              this.ccontent = !this.dummycontent1;
               return detail;
             }
           }
         }
       });
-      return allupdateddata; 
+      return allupdateddata;
     },
 
     allindividualprojects: function () {
@@ -193,15 +205,11 @@ export default {
       return newid;
     },
 
-
-
-
-
     // allindividualdetails: function () {
     //   let allcomponent = this.$store.state.allcomponent;
     //   let mainarray = [];
     //   let uniquearray=[];
-      
+
     //   allcomponent.filter((detailed) => {
     //     let referencename = detailed.reference_id.split(" ")[1];
     //     let referenceid = detailed.reference_id.split(" ")[0];
@@ -212,7 +220,7 @@ export default {
     //     }
     //   });
     //    let myset=new Set(mainarray)
-      
+
     //   var uniquedata = Array.from(new Set(mainarray));
     //   uniquearray=[...myset]
     //   console.log(uniquearray)
@@ -230,15 +238,14 @@ export default {
     },
   },
 
-  created() { 
+  created() {
     return this.$store.dispatch("getalldata");
   },
   mounted() {
     return this.$store.dispatch("getprofile");
   },
 
-  mixins:[datamixin]
-
+  mixins: [datamixin],
 };
 </script>
 

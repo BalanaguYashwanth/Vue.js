@@ -29,17 +29,32 @@
           </div>
         </div>
 
-        <div class="form-group my-4">
-          <label>
-            title
-            <input
-              v-model="title"
-              type="text"
-              class="form-control"
-              placeholder="enter the title"
-            />
-          </label>
+        <div class="form-row">
+          <div class="form-group col-md-8 my-4">
+            <label>
+              title
+              <input
+                v-model="title"
+                type="text"
+                class="form-control"
+                placeholder="enter the title"
+              />
+            </label>
+          </div>
+
+          <div class="form-group col-md-4 my-4">
+            <label>
+              Percentage
+              <input
+                v-model="percentage"
+                type="number"
+                class="form-control"
+                placeholder="enter % of project"
+              />
+            </label>
+          </div>
         </div>
+
         <div class="form-group">
           <label>
             description
@@ -93,6 +108,7 @@ export default {
       selectreference: "",
       info: "",
       selectfile: null,
+      percentage:'',
     };
   },
 
@@ -102,6 +118,18 @@ export default {
     },
 
     logout: function () {
+
+      let axiosConfig={
+        headers: {
+                Authorization: "Token " + localStorage.getItem('user-token')
+            }
+      };
+
+      axios.get('http://127.0.0.1:8000/owner/logout',axiosConfig)
+      .then(res=> console.log(res))
+      .catch(err=>console.log(err.response.data))
+
+
       localStorage.removeItem("user-token");
       this.$router.push("/ownerlogin");
     },
@@ -135,6 +163,7 @@ export default {
       fd.append('title', this.title)
       fd.append('description', this.description)
       fd.append('reference_id', this.selectreference)
+      fd.append('percentage',this.percentage)
 
         axios({
         method: 'post',

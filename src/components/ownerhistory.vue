@@ -1,35 +1,33 @@
 <template>
   <div class="container">
     <div id="title">
-             <button id="logout" v-on:click="logout">logout</button>
+      <button id="logout" v-on:click="logout">logout</button>
 
-      <slot name="owner" > </slot>
+      <slot name="owner"></slot>
     </div>
     <form>
-      <div  v-for=" (detailed,index) in getalldata"
-          
-          v-bind:key="index">
-
-        <div
-          class="card bg-light my-3"
-         v-if="detailed.user == getuserid"
-        >
-        <div  >
-          <div  class="card-body" >
-            <h5 class="card-title">title:{{detailed.title}}</h5>
-             <p class="card-text">user: {{detailed.reference_id}}</p>
-            <p class="card-text">description: {{detailed.description}}</p>
-          </div>
-          <div class="card-footer" id="mainbody">
-            <small class="text-muted">
-              Last updated {{detailed.timestamp}} ago
-              <br />
-              {{detailed.component_name}}
-            </small>
+      <div v-for=" (detailed,index) in getalldata" v-bind:key="index">
+        <div class="card bg-light my-3" v-if="detailed.user == getuserid">
+          <div>
+            <div class="card-body">
+              <h5 class="card-title">title:{{detailed.title}}</h5>
+              <p class="card-text">user: {{detailed.reference_id}}</p>
+              <p class="card-text">percentage: {{detailed.percentage}}</p>
+              <p class="card-text">
+                Preview Image:
+                <a v-bind:href="detailed.image">{{detailed.image.slice(58)}}</a>
+              </p>
+              <p class="card-text">description: {{detailed.description}}</p>
+            </div>
+            <div class="card-footer" id="mainbody">
+              <small class="text-muted">
+                Last updated {{detailed.timestamp}} ago
+                <br />
+                {{detailed.component_name}}
+              </small>
+            </div>
           </div>
         </div>
-        </div>
-
       </div>
     </form>
   </div>
@@ -56,13 +54,22 @@ export default {
     },
   },
 
-  methods:{
+  methods: {
     logout: function () {
+      let axiosConfig = {
+        headers: {
+          Authorization: "Token " + localStorage.getItem("user-token"),
+        },
+      };
+
+      axios
+        .get("http://127.0.0.1:8000/owner/logout", axiosConfig)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err.response.data));
+
       localStorage.removeItem("user-token");
       this.$router.push("/ownerlogin");
     },
-
-
   },
 
   created() {
