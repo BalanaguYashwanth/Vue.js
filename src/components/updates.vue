@@ -22,7 +22,7 @@
             </div>
 
             <div v-if="inputid == ceach ">
-              {{allindividualdetails}}
+              {{allindividualdetails}} 
               <button
                 class="btn btn-secondary"
                 style="float:right"
@@ -79,10 +79,13 @@
 
       <div v-show="!caccess">
         <div v-show="ccontent">
+          
           <div>
             <button v-on:click="backbtn1">back</button>
           </div>
+          <h1 style="text-align:center">  Completion of project {{percentcal()}}% </h1>
           <div class="form-row">
+          
             <div
               class="shadow p-3 mb-3 bg-white rounded col-md-6"
               v-for="(ceach1,index) in this.$store.state.updatedcomponents"
@@ -110,7 +113,7 @@
         >
           <div class="card-body">
             <h5 class="card-title">title:{{detailed.title}}</h5>
-            <p class="card-text">percentage: {{detailed.percentage}}</p>
+            
             <p class="card-text">
               Preview Image:
               <a v-bind:href="detailed.image">{{detailed.image.slice(58)}}</a>
@@ -127,6 +130,7 @@
         </div>
       </div>
     </form>
+    
   </div>
 </template>
 <script>
@@ -148,6 +152,39 @@ export default {
   },
 
   methods: {
+
+
+    percentcal:function(){
+      let allcomponent = this.$store.state.allpercent;
+      let percentarray=[];
+      let dummy=0;
+
+      for(let obj in allcomponent)
+      {
+         if(allcomponent[obj].percentage)
+         {
+           percentarray.push(allcomponent[obj].percentage)
+         }
+      }
+
+      for(let cal in percentarray)
+      {
+        if(percentarray[cal]>dummy)
+        {
+          dummy=percentarray[cal]
+        }
+       
+      }
+      
+      
+      return dummy
+
+    },
+
+
+
+
+
     backbtn1: function () {
       location.reload();
     },

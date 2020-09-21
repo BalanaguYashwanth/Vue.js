@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
         allcomponent:[],
         updatedcomponents:[],
         cid:[],
+        allpercent:[]
     },
 
     getters: {
@@ -51,7 +52,11 @@ export const store = new Vuex.Store({
        getid:(state,id)=>{
            state.cid=id
            console.log(state.cid)
-       }
+       },
+
+       getpercent:(state,percent)=>{
+            state.allpercent=percent
+        }
 
     },
 
@@ -61,6 +66,10 @@ export const store = new Vuex.Store({
             setTimeout(()=>{
                 context.commit('getcomponents',getdata)
             },2000)
+        },
+
+        percentaction:function(context,getpercent){
+            context.commit('getpercent',getpercent)
         },
 
         getalldata:function(context){

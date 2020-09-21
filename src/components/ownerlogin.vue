@@ -28,9 +28,11 @@ export default {
       username: "",
       password: "",
       incorrect1:"",
+      allcomponents:'',
     };
   },
   methods:{
+
       posting:function() {
           if(this.email!="" && this.password!="")
           {
@@ -53,7 +55,19 @@ export default {
               this.incorrect1="please fillup all blanks";
           }
       }
+  },
+
+  created(){
+    axios.get('http://127.0.0.1:8000/api/v5/componentEach/')
+    .then(res=>{
+      console.log(res)
+      this.allcomponents=res.data
+
+      })
+    .catch(err=>console.log(err.response.data))
   }
+
+
 };
 </script>
 

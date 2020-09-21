@@ -27,10 +27,23 @@
               <button v-on:click="push" class="btn btn-outline-secondary" type="button">+</button>
             </div>
           </div>
+
+            <div class="form-group col-md-4 my-4">
+            <label>
+              Percentage(%)
+              <input
+                v-model="percentage"
+                type="number"
+                class="form-control"
+                style="text-align:center"
+                placeholder="enter % of completion of project"
+              />
+            </label>
+          </div>
         </div>
 
-        <div class="form-row">
-          <div class="form-group col-md-8 my-4">
+        <div >
+          <div class="form-group  my-3">
             <label>
               title
               <input
@@ -38,18 +51,6 @@
                 type="text"
                 class="form-control"
                 placeholder="enter the title"
-              />
-            </label>
-          </div>
-
-          <div class="form-group col-md-4 my-4">
-            <label>
-              Percentage
-              <input
-                v-model="percentage"
-                type="number"
-                class="form-control"
-                placeholder="enter % of project"
               />
             </label>
           </div>
