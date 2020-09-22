@@ -12,13 +12,30 @@ Vue.use(Vuesimplealert,{reverseButtons:true})
 
 Vue.config.productionTip = false
 
-const router=new Vuerouters({
-  routes:Routers,
-  mode:'history',
-});
+// const router=new Vuerouters({
+//   routes:Routers,
+//   mode:'history',
+// });
+
+// const openRoutes=['owner-login','owner-register','customer-login','customer-register']
+
+// router.beforeEach((to,from,next)=>{
+
+//     if(openRoutes.includes(to.name)){
+//         next()
+//     }else if(localStorage.getItem('user-token')){
+//         next()
+//     }else{
+//         next( 'choose' )
+//     }
+
+// })
+
+
 
 new Vue({
   render: h => h(App),
-  router:router,
+  router:Routers,
   store:store,
 }).$mount('#app')
+

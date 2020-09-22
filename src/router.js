@@ -8,16 +8,39 @@ import updates from './components/updates'
 import updatesComponents from './components/updates-components'
 import ownerhistory from './components/ownerhistory'
 import choose from './components/choose'
+import Vue from 'vue'
+import Vuerouters from 'vue-router'
 
-export default[
-    {path:'/ownerregister',component:owneregister},
-    {path:'/ownerlogin',component:ownerlogin},
-    {path:'/component',component:component},
-    {path:'/customerregister',component:customerregister},
-    {path:'/customerlogin',component:customerlogin},
-    {path:'/customer',component:customer},
-    {path:'/updates',component:updates, props: true},
-    {path:'/updatesComponents',component:updatesComponents, props: true},
-    {path:'/ownerhistory',component:ownerhistory},
-    {path:'/choose',component:choose},
-]
+Vue.use(Vuerouters)
+
+const router=new Vuerouters({
+    mode:'history',
+    routes:[
+        {path:'/ownerregister',name:'owner-register',component:owneregister},
+        {path:'/ownerlogin',name:'owner-login',component:ownerlogin},
+        {path:'/component',component:component},
+        {path:'/customerregister',name:'customer-register',component:customerregister},
+        {path:'/customerlogin',name:'customer-login',component:customerlogin},
+        {path:'/customer',component:customer},
+        {path:'/updates',component:updates, props: true},
+        {path:'/updatesComponents',component:updatesComponents, props: true},
+        {path:'/ownerhistory',component:ownerhistory},
+        {path:'/choose',name:'choose',component:choose},
+    ],
+  });
+
+const openRoutes=['owner-login','owner-register','customer-login','customer-register','choose']
+
+router.beforeEach((to, from, next) => {
+    
+    if(openRoutes.includes(to.name)  ){
+      next()
+    } else if (localStorage.getItem('user-token')){
+      next()
+    }else{
+      next('/choose')
+    }
+
+})
+
+export default router
