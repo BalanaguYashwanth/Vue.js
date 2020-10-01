@@ -1,1 +1,1 @@
-Main app of Vue with firebase
+Main app of Vue with firebase for COVID-19
